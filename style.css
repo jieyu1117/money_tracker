@@ -1,0 +1,96 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+}
+
+.container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 40px auto;
+}
+
+h1 {
+    text-align: center;
+}
+
+.summary {
+    display: flex; /*let the 3 cards be in a row*/
+    gap: 20px;
+}
+
+.card {
+    background-color: white;
+    padding: 20px;
+    flex: 1;
+    border-radius: 10px;
+    text-align: center;
+}
+
+/* Add Transaction Form */
+
+.transaction-form {
+    background-color: white;
+    margin-top: 30px;
+    padding: 25px;
+    border-radius: 10px;
+}
+
+.transaction-form label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.transaction-form input,
+.transaction-form select {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.transaction-form button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+/* Main page layout */
+.layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 220px;
+    background-color: #1f2937;
+    padding: 25px;
+    box-sizing: border-box;
+}
+
+/* Sidebar title */
+.sidebar h2 {
+    color: white;
+    margin-bottom: 30px;
+}
+
+/* Sidebar links */
+.sidebar a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+}
+
+/* Sidebar link when mouse moves over it */
+.sidebar a:hover {
+    background-color: #374151;
+}
+
+/* Main content */
+.main-content {
+    flex: 1;
+    padding: 40px;
+}
