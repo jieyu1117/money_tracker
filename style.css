@@ -1,96 +1,532 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f6f8;
-}
+/* =========================
+   General
+========================= */
 
-.container {
-    width: 90%;
-    max-width: 1000px;
-    margin: 40px auto;
-}
-
-h1 {
-    text-align: center;
-}
-
-.summary {
-    display: flex; /*let the 3 cards be in a row*/
-    gap: 20px;
-}
-
-.card {
-    background-color: white;
-    padding: 20px;
-    flex: 1;
-    border-radius: 10px;
-    text-align: center;
-}
-
-/* Add Transaction Form */
-
-.transaction-form {
-    background-color: white;
-    margin-top: 30px;
-    padding: 25px;
-    border-radius: 10px;
-}
-
-.transaction-form label {
-    display: block;
-    margin-top: 15px;
-    margin-bottom: 5px;
-}
-
-.transaction-form input,
-.transaction-form select {
-    width: 100%;
-    padding: 10px;
+* {
     box-sizing: border-box;
 }
 
-.transaction-form button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    cursor: pointer;
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f5f7fb;
+    color: #1e293b;
 }
 
-/* Main page layout */
+
+/* =========================
+   Main Layout
+========================= */
+
 .layout {
     display: flex;
     min-height: 100vh;
 }
 
-/* Sidebar */
+
+/* =========================
+   Sidebar
+========================= */
+
 .sidebar {
-    width: 220px;
-    background-color: #1f2937;
-    padding: 25px;
-    box-sizing: border-box;
+    width: 240px;
+    min-width: 240px;
+    background-color: #172554;
+    padding: 30px 20px;
+    min-height: 100vh;
 }
+
 
 /* Sidebar title */
+
 .sidebar h2 {
     color: white;
-    margin-bottom: 30px;
+    font-size: 21px;
+    margin: 0 0 40px 10px;
 }
 
-/* Sidebar links */
-.sidebar a {
+
+/* Sidebar navigation */
+
+.sidebar nav a {
     display: block;
-    color: white;
+    color: #cbd5e1;
     text-decoration: none;
-    padding: 12px;
-    margin-bottom: 10px;
-    border-radius: 8px;
+
+    padding: 13px 15px;
+    margin-bottom: 8px;
+
+    border-radius: 10px;
+
+    font-size: 15px;
+
+    transition: 0.2s;
 }
 
-/* Sidebar link when mouse moves over it */
-.sidebar a:hover {
-    background-color: #374151;
+
+/* Mouse hover */
+
+.sidebar nav a:hover {
+    background-color: #263b80;
+    color: white;
 }
 
-/* Main content */
+
+/* =========================
+   Main Content
+========================= */
+
 .main-content {
     flex: 1;
     padding: 40px;
+}
+
+
+/* Keep content size fixed */
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+
+/* =========================
+   Headings
+========================= */
+
+h1 {
+    font-size: 30px;
+    margin-top: 0;
+    margin-bottom: 30px;
+}
+
+h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+h3 {
+    margin-top: 0;
+}
+
+
+/* =========================
+   Dashboard Summary Cards
+========================= */
+
+.summary {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+
+.card {
+    background-color: white;
+
+    padding: 25px;
+
+    flex: 1;
+
+    border-radius: 14px;
+
+    border: 1px solid #e2e8f0;
+
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+}
+
+
+.card h3 {
+    color: #64748b;
+    font-size: 14px;
+    font-weight: normal;
+    margin-bottom: 10px;
+}
+
+
+.card p {
+    font-size: 26px;
+    font-weight: bold;
+    margin: 0;
+}
+
+
+/* =========================
+   Transaction Form
+========================= */
+
+.transaction-form {
+    background-color: white;
+
+    margin-top: 30px;
+
+    padding: 30px;
+
+    border-radius: 14px;
+
+    border: 1px solid #e2e8f0;
+
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+
+    max-width: 750px;
+}
+
+
+.transaction-form label {
+    display: block;
+
+    margin-top: 18px;
+    margin-bottom: 7px;
+
+    font-size: 14px;
+    font-weight: bold;
+
+    color: #334155;
+}
+
+
+.transaction-form input,
+.transaction-form select {
+    width: 100%;
+
+    padding: 12px;
+
+    border: 1px solid #cbd5e1;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+
+    background-color: white;
+}
+
+
+.transaction-form input:focus,
+.transaction-form select:focus {
+    outline: none;
+
+    border-color: #6366f1;
+
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+
+/* =========================
+   Buttons
+========================= */
+
+button {
+    border: none;
+
+    background-color: #4f46e5;
+
+    color: white;
+
+    padding: 12px 22px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-size: 15px;
+
+    transition: 0.2s;
+}
+
+
+button:hover {
+    background-color: #4338ca;
+}
+
+
+.transaction-form button {
+    margin-top: 25px;
+}
+
+
+/* =========================
+   Chart
+========================= */
+
+.chart-container {
+    background-color: white;
+
+    margin-top: 25px;
+
+    padding: 30px;
+
+    border-radius: 14px;
+
+    border: 1px solid #e2e8f0;
+
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+
+    text-align: center;
+}
+
+
+.chart {
+    width: 220px;
+    height: 220px;
+
+    margin: 25px auto;
+
+    border-radius: 50%;
+
+    background: conic-gradient(
+        #22c55e 0% 50%,
+        #ef4444 50% 100%
+    );
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+}
+
+
+.chart::before {
+    content: "";
+
+    width: 140px;
+    height: 140px;
+
+    background-color: white;
+
+    border-radius: 50%;
+}
+
+
+.chart-text {
+    position: absolute;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+}
+
+
+.chart-text span {
+    font-size: 24px;
+
+    font-weight: bold;
+}
+
+
+.chart-text small {
+    color: #64748b;
+
+    margin-top: 4px;
+}
+
+
+/* =========================
+   Chart Legend
+========================= */
+
+.chart-legend {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 35px;
+
+    margin-top: 20px;
+}
+
+
+.chart-legend div {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color: #475569;
+}
+
+
+.chart-legend strong {
+    color: #1e293b;
+
+    margin-left: 5px;
+}
+
+
+.income-dot {
+    width: 11px;
+    height: 11px;
+
+    background-color: #22c55e;
+
+    border-radius: 50%;
+}
+
+
+.expense-dot {
+    width: 11px;
+    height: 11px;
+
+    background-color: #ef4444;
+
+    border-radius: 50%;
+}
+
+
+/* =========================
+   Add Transaction Prompt
+========================= */
+
+.add-transaction-prompt {
+    background-color: white;
+
+    margin-top: 25px;
+
+    padding: 30px;
+
+    border-radius: 14px;
+
+    border: 1px solid #e2e8f0;
+
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+
+    text-align: center;
+}
+
+
+.add-transaction-prompt h2 {
+    margin-bottom: 10px;
+}
+
+
+.add-transaction-prompt p {
+    color: #64748b;
+
+    margin-bottom: 20px;
+}
+
+
+/* =========================
+   Payment Summary
+========================= */
+
+.payment-summary {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 20px;
+}
+
+
+.summary-account {
+    background-color: white;
+
+    padding: 22px;
+
+    border-radius: 14px;
+
+    border: 1px solid #e2e8f0;
+
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+}
+
+
+.summary-account h3 {
+    font-size: 17px;
+
+    margin-bottom: 18px;
+
+    color: #1e293b;
+}
+
+
+.summary-account p {
+    display: flex;
+
+    justify-content: space-between;
+
+    margin: 10px 0;
+
+    font-size: 14px;
+
+    color: #64748b;
+}
+
+
+.summary-account span {
+    font-weight: bold;
+
+    color: #1e293b;
+}
+
+
+/* =========================
+   Responsive
+========================= */
+
+@media (max-width: 900px) {
+
+    .sidebar {
+        width: 200px;
+        min-width: 200px;
+    }
+
+    .main-content {
+        padding: 25px;
+    }
+
+    .summary {
+        flex-direction: column;
+    }
+
+    .payment-summary {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .layout {
+        display: block;
+    }
+
+    .sidebar {
+        width: 100%;
+        min-width: 100%;
+        min-height: auto;
+
+        padding: 20px;
+    }
+
+    .sidebar h2 {
+        margin-bottom: 20px;
+    }
+
+    .sidebar nav a {
+        display: inline-block;
+        margin-right: 5px;
+    }
+
+    .main-content {
+        padding: 20px;
+    }
+
+    .payment-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .chart-legend {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+
 }

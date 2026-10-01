@@ -26,28 +26,66 @@
         <!-- Main Content -->
         <main class="main-content">
 
-            <div class="container">
+            <div class="summary">
 
-                <h1>💰 Money Tracker</h1>
+                <div class="card">
+                    <h3>Balance</h3>
+                    <p id="balance">RM 0.00</p>
+                </div>
 
-                <div class="summary">
+                <div class="card">
+                    <h3>Income</h3>
+                    <p id="income">RM 0.00</p>
+                </div>
 
-                    <div class="card">
-                        <h3>Balance</h3>
-                        <p id="balance">RM 0.00</p>
-                    </div>
+                <div class="card">
+                    <h3>Expense</h3>
+                    <p id="expense">RM 0.00</p>
+                </div>
 
-                    <div class="card">
-                        <h3>Income</h3>
-                        <p id="income">RM 0.00</p>
-                    </div>
+            </div>
 
-                    <div class="card">
-                        <h3>Expense</h3>
-                        <p id="expense">RM 0.00</p>
+
+            <div class="chart-container">
+
+                <h2>Income & Expense</h2>
+
+                <div class="chart">
+
+                    <div class="chart-text">
+                        <span id="chartBalance">RM 0.00</span>
+                        <small>Overview</small>
                     </div>
 
                 </div>
+
+                <div class="chart-legend">
+
+                    <div>
+                        <span class="income-dot"></span>
+                        Income
+                        <strong id="chartIncome">RM 0.00</strong>
+                    </div>
+
+                    <div>
+                        <span class="expense-dot"></span>
+                        Expense
+                        <strong id="chartExpense">RM 0.00</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="add-transaction-prompt">
+
+                <h2>Start tracking your money 💰</h2>
+
+                <p>Add your income and expenses to keep track of your money.</p>
+
+                <button onclick="window.location.href='add-transaction.html'">
+                    + Add Transaction
+                </button>
 
             </div>
 
@@ -55,7 +93,7 @@
 
     </div>
 
-    <script src="script.js"></script>
+    <script type="module"src="script.js"></script>
 
 </body>
 </html>

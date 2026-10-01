@@ -1,253 +1,237 @@
-//Store all the transaction
-let all_transaction = []
+// =========================
+// Firebase Authentication
+// =========================
 
-// Get the Add Transaction button
-const addButton = document.getElementById("addButton");
+import { app } from "./firebase.js";
 
-// Payment Method
-const paymentType = document.getElementById("paymentType");
-const accountSection = document.getElementById("accountSection");
-const accountLabel = document.getElementById("accountLabel");
-const paymentAccount = document.getElementById("paymentAccount");
+import {
+    getAuth,
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
-// Category
-const typeSelect = document.getElementById("type");
-const categorySelect = document.getElementById("category");
-const customCategory = document.getElementById("customCategory");
 
-// Set today's date
-const dateInput = document.getElementById("date");
-const today = new Date();
-const year = today.getFullYear();
-const month = String(today.getMonth() + 1).padStart(2, "0");
-const day = String(today.getDate()).padStart(2, "0");
+// =========================
+// Firebase Firestore
+// =========================
 
-dateInput.value = `${year}-${month}-${day}`;
+import {
+    getFirestore,
+    collection,
+    getDocs
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
-// Store the total amounts
-let balance = 0;
-let income = 0;
-let expense = 0;
 
-// Run when the button is clicked
-addButton.addEventListener("click", function() {
-    // Get the values from the form
-    const type = document.getElementById("type").value;
-    const amount = document.getElementById("amount").value;
-    const category = document.getElementById("category").value;
-    const description = document.getElementById("description").value;
-    const date = document.getElementById("date").value;
+// Firebase Authentication
+const auth = getAuth(app);
 
-    // convert amount from text to number
-    const money = Number(amount);
-    // check whether it is income or expense
-    if(type === "income") {
-        income += money;
-        balance += money;
-    } else if(type === "expense") {
-        expense += money;
-        balance -= money;
-    }
 
-    // Create a transaction object
-    const transaction = {
-        type: type,
-        amount: Number(amount),
-        category: category,
-        paymentType: paymentType.value,
-        paymentAccount: paymentAccount.value,
-        description: description,
-        date: date
-    };
+// Firestore Database
+const db = getFirestore(app);
 
-    // Add the transaction into the list
-    all_transaction.push(transaction);
 
-    //save transactions
-    localStorage.setItem("transactions", JSON.stringify(all_transaction));
-    
-    // Show the values in the Console
-    console.log(type);
-    console.log(amount);
-    console.log(category);
-    console.log(description);
-    console.log(date);
-    console.log(transaction);
-    console.log(all_transaction);
+// =========================
+// Check Current User
+// =========================
 
-    // Update dashboard if the elements exist
-    const balanceElement = document.getElementById("balance");
-    const incomeElement = document.getElementById("income");
-    const expenseElement = document.getElementById("expense");
+onAuthStateChanged(auth, async function(user) {
 
-    if (balanceElement) {
-        balanceElement.textContent = "RM " + balance.toFixed(2);
-    }
+    if (user) {
 
-    if (incomeElement) {
-        incomeElement.textContent = "RM " + income.toFixed(2);
-    }
+        console.log("Current user:");
+        console.log("Name:", user.displayName);
+        console.log("Email:", user.email);
+        console.log("UID:", user.uid);
 
-    if (expenseElement) {
-        expenseElement.textContent = "RM " + expense.toFixed(2);
-    }
-})
 
-// Change account options based on payment method
-paymentType.addEventListener("change", function() {
+        // =========================
+        // Load Transactions
+        // =========================
 
-    // Bank
-    if (paymentType.value === "bank") {
+        let all_transaction = [];
 
-        accountSection.style.display = "block";
-        accountLabel.textContent = "Bank";
 
-        paymentAccount.innerHTML = `
-            <option value="">Select bank</option>
-            <option value="public-bank">Public Bank</option>
-            <option value="hong-leong-bank">Hong Leong Bank</option>
-            <option value="maybank">Maybank</option>
-            <option value="cimb">CIMB</option>
-            <option value="rhb">RHB</option>
-            <option value="other">Other</option>
-        `;
+        try {
 
-    }
+            // Get user's transactions
+            const transactionCollection =
+                collection(
+                    db,
+                    "users",
+                    user.uid,
+                    "transactions"
+                );
 
-    // E-Wallet
-    else if (paymentType.value === "e-wallet") {
 
-        accountSection.style.display = "block";
-        accountLabel.textContent = "E-Wallet";
+            // Read transactions from Firestore
+            const querySnapshot =
+                await getDocs(transactionCollection);
 
-        paymentAccount.innerHTML = `
-            <option value="">Select e-wallet</option>
-            <option value="tng">Touch 'n Go</option>
-            <option value="grabpay">GrabPay</option>
-            <option value="boost">Boost</option>
-            <option value="other">Other</option>
-        `;
 
-    }
+            querySnapshot.forEach(function(doc) {
 
-    // Cash
-    else if (paymentType.value === "cash") {
+                const transaction =
+                    doc.data();
 
-        accountSection.style.display = "none";
-        paymentAccount.value = "";
 
-    }
+                all_transaction.push(transaction);
 
-    // Nothing selected
-    else {
+            });
 
-        accountSection.style.display = "none";
-        paymentAccount.value = "";
 
-    }
+            console.log("Transactions loaded from Firestore:");
+            console.log(all_transaction);
 
-});
 
-// Change category options based on type
-typeSelect.addEventListener("change", function() {
-
-    // Income categories
-    if (typeSelect.value === "income") {
-
-        categorySelect.innerHTML = `
-            <option value="">Select category</option>
-            <option value="salary">Salary</option>
-            <option value="bonus">Bonus</option>
-            <option value="other">Other</option>
-        `;
-
-    }
-
-    // Expense categories
-    else if (typeSelect.value === "expense") {
-
-        categorySelect.innerHTML = `
-            <option value="">Select category</option>
-            <option value="food">Food</option>
-            <option value="transport">Transport</option>
-            <option value="shopping">Shopping</option>
-            <option value="bills">Bills</option>
-            <option value="entertainment">Entertainment</option>
-            <option value="other">Other</option>
-        `;
-
-    }
-
-    // Nothing selected
-    else {
-
-        categorySelect.innerHTML = `
-            <option value="">Select category</option>
-        `;
-
-    }
-
-});
-
-typeSelect.dispatchEvent(new Event("change"));
-
-// Show custom category when Other is selected
-categorySelect.addEventListener("change", function() {
-
-    if (categorySelect.value === "other") {
-
-        customCategory.style.display = "block";
-
-    } else {
-
-        customCategory.style.display = "none";
-        customCategory.value = "";
-
-    }
-
-});
-
-// Load saved transactions
-const savedData = localStorage.getItem("transactions");
-
-if (savedData) {
-
-    const transactions = JSON.parse(savedData);
-
-    let totalIncome = 0;
-    let totalExpense = 0;
-
-    transactions.forEach(function(transaction) {
-
-        if (transaction.type === "income") {
-            totalIncome += transaction.amount;
         }
 
-        if (transaction.type === "expense") {
-            totalExpense += transaction.amount;
+        catch (error) {
+
+            console.error(
+                "Error loading transactions:",
+                error
+            );
+
+            return;
+
         }
 
-    });
 
-    const totalBalance = totalIncome - totalExpense;
+        // =========================
+        // Calculate Income & Expense
+        // =========================
 
-    console.log("Income:", totalIncome);
-    console.log("Expense:", totalExpense);
-    console.log("Balance:", totalBalance);
+        let totalIncome = 0;
 
-    const balanceElement = document.getElementById("balance");
-    const incomeElement = document.getElementById("income");
-    const expenseElement = document.getElementById("expense");
+        let totalExpense = 0;
 
-    if (balanceElement) {
-        balanceElement.textContent = "RM " + totalBalance.toFixed(2);
+
+        all_transaction.forEach(function(transaction) {
+
+            if (transaction.type === "income") {
+
+                totalIncome += transaction.amount;
+
+            }
+
+
+            if (transaction.type === "expense") {
+
+                totalExpense += transaction.amount;
+
+            }
+
+        });
+
+
+        // Calculate balance
+        const totalBalance =
+            totalIncome - totalExpense;
+
+
+        // =========================
+        // Update Dashboard
+        // =========================
+
+        const balanceElement =
+            document.getElementById("balance");
+
+        const incomeElement =
+            document.getElementById("income");
+
+        const expenseElement =
+            document.getElementById("expense");
+
+
+        if (balanceElement) {
+
+            balanceElement.textContent =
+                "RM " + totalBalance.toFixed(2);
+
+        }
+
+
+        if (incomeElement) {
+
+            incomeElement.textContent =
+                "RM " + totalIncome.toFixed(2);
+
+        }
+
+
+        if (expenseElement) {
+
+            expenseElement.textContent =
+                "RM " + totalExpense.toFixed(2);
+
+        }
+
+
+        // =========================
+        // Update Income & Expense Chart
+        // =========================
+
+        const chart =
+            document.querySelector(".chart");
+
+        const chartIncome =
+            document.getElementById("chartIncome");
+
+        const chartExpense =
+            document.getElementById("chartExpense");
+
+        const chartBalance =
+            document.getElementById("chartBalance");
+
+
+        const totalMoney =
+            totalIncome + totalExpense;
+
+
+        if (
+            chart &&
+            chartIncome &&
+            chartExpense &&
+            chartBalance
+        ) {
+
+            // Show income
+            chartIncome.textContent =
+                "RM " + totalIncome.toFixed(2);
+
+
+            // Show expense
+            chartExpense.textContent =
+                "RM " + totalExpense.toFixed(2);
+
+
+            // Show balance
+            chartBalance.textContent =
+                "RM " + totalBalance.toFixed(2);
+
+
+            // Update chart
+            if (totalMoney > 0) {
+
+                const incomePercentage =
+                    (totalIncome / totalMoney) * 100;
+
+
+                chart.style.background =
+                    `conic-gradient(
+                        #4ade80 0% ${incomePercentage}%,
+                        #f87171 ${incomePercentage}% 100%
+                    )`;
+
+            }
+
+        }
+
     }
 
-    if (incomeElement) {
-        incomeElement.textContent = "RM " + totalIncome.toFixed(2);
+    else {
+
+        console.log("No user is logged in.");
+
     }
 
-    if (expenseElement) {
-        expenseElement.textContent = "RM " + totalExpense.toFixed(2);
-    }
-}
+});
