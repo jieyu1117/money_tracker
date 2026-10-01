@@ -206,3 +206,48 @@ categorySelect.addEventListener("change", function() {
     }
 
 });
+
+// Load saved transactions
+const savedData = localStorage.getItem("transactions");
+
+if (savedData) {
+
+    const transactions = JSON.parse(savedData);
+
+    let totalIncome = 0;
+    let totalExpense = 0;
+
+    transactions.forEach(function(transaction) {
+
+        if (transaction.type === "income") {
+            totalIncome += transaction.amount;
+        }
+
+        if (transaction.type === "expense") {
+            totalExpense += transaction.amount;
+        }
+
+    });
+
+    const totalBalance = totalIncome - totalExpense;
+
+    console.log("Income:", totalIncome);
+    console.log("Expense:", totalExpense);
+    console.log("Balance:", totalBalance);
+
+    const balanceElement = document.getElementById("balance");
+    const incomeElement = document.getElementById("income");
+    const expenseElement = document.getElementById("expense");
+
+    if (balanceElement) {
+        balanceElement.textContent = "RM " + totalBalance.toFixed(2);
+    }
+
+    if (incomeElement) {
+        incomeElement.textContent = "RM " + totalIncome.toFixed(2);
+    }
+
+    if (expenseElement) {
+        expenseElement.textContent = "RM " + totalExpense.toFixed(2);
+    }
+}
